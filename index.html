@@ -13,7 +13,7 @@
     -webkit-user-select: none;   
     user-select: none;           
     -webkit-tap-highlight-color: transparent; 
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Apple SD Gothic Neo", sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     box-sizing: border-box;
   }
 
@@ -23,11 +23,11 @@
   .container { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
   h2 { text-align: center; color: #333; margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 15px; }
   
-  /* Input Group */
+  /* Input Groups */
   .input-group { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: nowrap; }
   .date-time-group { display: flex; gap: 5px; width: 100%; margin-bottom: 15px; }
   
-  /* Common Input Style */
+  /* Common Input Styles */
   select, input, button { 
       padding: 0 5px; 
       border-radius: 8px; 
@@ -40,7 +40,7 @@
       -webkit-appearance: none; 
   }
   
-  /* Checkbox Style */
+  /* Checkbox Styles */
   input[type="checkbox"] {
       -webkit-appearance: checkbox !important;
       appearance: checkbox !important;
@@ -124,7 +124,7 @@
 
   /* Date Range Box */
   .date-range-box {
-      background: #f1f3f5; padding: 12px; border-radius: 10px; margin-bottom: 15px; border: 1px solid #e9ecef;
+      background: #f1f3f5; padding: 12px 8px; border-radius: 10px; margin-bottom: 15px; border: 1px solid #e9ecef;
   }
   
   .range-header {
@@ -133,6 +133,7 @@
       justify-content: space-between; 
       align-items: center; 
       margin-bottom: 10px;
+      padding: 0 4px;
   }
   
   .range-title { 
@@ -146,8 +147,19 @@
       background: #6c757d; color: white; font-size: 0.8rem; padding: 6px 12px; height: auto; border-radius: 20px; width: auto; white-space: nowrap; flex-shrink: 0;
   }
 
-  .range-inputs { display: flex; gap: 5px; align-items: center; }
-  .btn-search { background: #36a2eb; color: white; flex: 0 0 55px; font-size: 0.9rem; border-radius: 8px; padding: 0; }
+  /* Compact Input Styles */
+  .range-inputs { display: flex; gap: 3px; align-items: center; }
+  
+  .range-inputs input[type="date"] {
+      flex: 1; 
+      min-width: 0; 
+      font-size: 13px;
+      letter-spacing: -0.5px;
+      padding: 0; 
+      background: #fff;
+  }
+
+  .btn-search { background: #36a2eb; color: white; flex: 0 0 50px; font-size: 0.9rem; border-radius: 8px; padding: 0; }
 
   /* View Toggle */
   .view-toggle-container { display: flex; background: #e9ecef; border-radius: 10px; padding: 4px; margin-bottom: 15px; }
@@ -166,10 +178,9 @@
   /* Chart Area */
   .chart-box { height: 300px; position: relative; margin-bottom: 0px; display: block; }
   
-  /* Prevent scroll on graph */
   canvas { touch-action: none; }
 
-  /* Top Fixed Tooltip Box */
+  /* Chart Tooltip */
   #chartTooltip {
       background: #333;
       color: white;
@@ -210,7 +221,6 @@
   .tooltip-body { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; width: 100%; }
   .tooltip-item { display: flex; align-items: center; gap: 6px; font-size: 0.95rem; }
   
-  /* Color Square */
   .color-square { 
       width: 12px; 
       height: 12px; 
@@ -255,7 +265,7 @@
   
   .btn-reset { width: 100%; background: #6c757d; margin-top: 20px; padding:0; border-radius:8px; color:white; border:none; font-weight:bold; height: 46px; }
   
-  /* Multi-delete Button */
+  /* Delete Selected Button */
   .btn-del-sel {
       background: #dc3545; 
       color: white; 
@@ -279,7 +289,7 @@
       cursor: pointer;
   }
   
-  /* Modal */
+  /* Modals */
   .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 9999; }
   .modal-box { background: white; padding: 25px; border-radius: 12px; width: 90%; max-width: 320px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
   .modal-title { font-size: 1.2rem; font-weight: bold; margin-bottom: 15px; color: #333; }
@@ -293,10 +303,11 @@
   
   .chk-label { display: flex; align-items: center; margin-bottom: 10px; font-size: 1rem; cursor: pointer; justify-content: flex-start; padding-left: 10px;}
   
-  /* Slider */
-  input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; height: auto; border:none;}
-  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 20px; width: 20px; border-radius: 50%; background: #36a2eb; cursor: pointer; margin-top: -8px; }
-  input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; cursor: pointer; background: #ddd; border-radius: 2px; }
+  /* Filter Select */
+  #historyFilter {
+      background: #f8f9fa; border:1px solid #ddd; font-weight:bold; color:#555;
+      height: 32px; font-size: 0.85rem; width: auto; text-align-last: center;
+  }
 </style>
 </head>
 <body>
@@ -306,11 +317,11 @@
   
   <div class="input-group">
     <select id="drugType">
-      <option value="tirz">Tirzepatide (5d)</option>
-      <option value="reta">Retatrutide (6d)</option>
-      <option value="sema">Semaglutide (7d)</option>
+      <option value="tirz">Tirzepatide (5 days)</option>
+      <option value="reta">Retatrutide (6 days)</option>
+      <option value="sema">Semaglutide (7 days)</option>
     </select>
-    <input type="number" id="doseAmt" placeholder="Dose (mg)" step="0.1">
+    <input type="number" id="doseAmt" placeholder="Dosage (mg)" step="0.1">
   </div>
   
   <div class="date-time-group">
@@ -342,13 +353,13 @@
   <div class="date-range-box">
       <div class="range-header">
           <div class="range-title">📅 Date Range</div>
-          <button class="btn-full-range" onclick="setFullRange()">🔄 Full Range</button>
+          <button class="btn-full-range" onclick="setFullRange()">🔄 All Time</button>
       </div>
       <div class="range-inputs">
           <input type="date" id="searchStart" onchange="checkRangeInput(this)">
           <span>~</span>
           <input type="date" id="searchEnd" onchange="checkRangeInput(this)">
-          <button class="btn-search" onclick="searchUpdate()">Search</button>
+          <button class="btn-search" onclick="searchUpdate()">Go</button>
       </div>
   </div>
 
@@ -365,7 +376,7 @@
   </div>
 
   <div id="chartTooltip">
-      <span style="color:#aaa;">Touch the graph to see details.</span>
+      <span style="color:#aaa;">Touch graph to see details.</span>
   </div>
 
   <div class="chart-box" id="chartArea">
@@ -373,15 +384,11 @@
   </div>
   
   <div class="list-wrapper" id="listArea">
-      <h3 style="margin:20px 0 10px; font-size:1.1em; color:#555;">📅 Daily Level (Injection Day)</h3>
+      <h3 style="margin:20px 0 10px; font-size:1.1em; color:#555;">📅 Daily Levels (Dose marked)</h3>
       <table class="daily-table" id="dailyTable">
           <thead>
               <tr>
-                  <th style="width:25%">Date</th>
-                  <th style="color:#36a2eb">Tirz</th>
-                  <th style="color:#ff6384">Reta</th>
-                  <th style="color:#28a745">Sema</th>
-              </tr>
+                  </tr>
           </thead>
           <tbody id="dailyTableBody"></tbody>
       </table>
@@ -389,11 +396,17 @@
   </div>
 
   <div id="historySection">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin:30px 0 10px;">
-          <h3 style="margin:0; font-size:1.1em; color:#555;">💉 Injection History</h3>
-          <div style="display:flex; gap:5px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin:30px 0 10px; flex-wrap: wrap; gap: 10px;">
+          <h3 style="margin:0; font-size:1.1em; color:#555; white-space: nowrap;">💉 Dosage History</h3>
+          <div style="display:flex; gap:5px; align-items:center;">
+              <select id="historyFilter" onchange="changeHistoryFilter()">
+                  <option value="all">All</option>
+                  <option value="tirz">Tirz</option>
+                  <option value="reta">Reta</option>
+                  <option value="sema">Sema</option>
+              </select>
               <button class="btn-select-all" onclick="toggleSelectAll()">Select All</button>
-              <button class="btn-del-sel" onclick="askMultiDel()">Delete Selected</button>
+              <button class="btn-del-sel" onclick="askMultiDel()">Delete</button>
           </div>
       </div>
       <div class="history-box" id="historyList"></div>
@@ -406,7 +419,7 @@
 <div id="editModal" class="modal-overlay">
   <div class="modal-box">
     <div class="modal-title" id="editModalTitle">Edit Current Level</div>
-    <p class="modal-desc">Sets residual amount based on current date & time.</p>
+    <p class="modal-desc">Set remaining level manually for current time.</p>
     <input type="number" id="editInput" class="modal-input" step="0.1" placeholder="0.0">
     <div class="modal-btns">
       <button class="btn-pop bg-gray" onclick="closeEditModal()">Cancel</button>
@@ -425,7 +438,7 @@
         <option value="sema">Semaglutide</option>
     </select>
     
-    <div style="text-align:left; margin-bottom:5px; font-weight:bold; color:#555;">Dose (mg)</div>
+    <div style="text-align:left; margin-bottom:5px; font-weight:bold; color:#555;">Dosage (mg)</div>
     <input type="number" id="editRecordAmt" class="modal-input" step="0.1">
     
     <div style="text-align:left; margin-bottom:5px; font-weight:bold; color:#555;">Date & Time</div>
@@ -448,7 +461,7 @@
         <label class="chk-label"><input type="checkbox" id="checkReta"> 🔴 Retatrutide</label>
         <label class="chk-label"><input type="checkbox" id="checkSema"> 🟢 Semaglutide</label>
     </div>
-    <div id="resetError" style="color:red; display:none; margin-bottom:10px;">Please make a selection!</div>
+    <div id="resetError" style="color:red; display:none; margin-bottom:10px;">Please select at least one!</div>
     <div class="modal-btns">
       <button class="btn-pop bg-gray" onclick="closeResetModal()">Cancel</button>
       <button class="btn-pop bg-red" onclick="confirmReset()">Delete</button>
@@ -471,7 +484,6 @@
 Chart.register(ChartDataLabels);
 
 let doses = JSON.parse(localStorage.getItem('pep_history_final_v15')) || [];
-let appSettings = JSON.parse(localStorage.getItem('pep_settings_v1')) || { tooltipOpacity: 0.8 };
 
 const ctx = document.getElementById('myChart').getContext('2d');
 let myChart;
@@ -560,6 +572,7 @@ function setDisplayType(type) {
         document.getElementById('chartArea').style.display = 'none';
         document.getElementById('chartTooltip').style.display = 'none'; 
         document.getElementById('listArea').style.display = 'block';
+        renderDailyTable();
     }
     update();
 }
@@ -574,7 +587,7 @@ function add() {
   if(!dDate) { dDate = getTodayString(); document.getElementById('inputDate').value = dDate; }
   if(!dTime) { dTime = getNowTimeString(); document.getElementById('inputTime').value = dTime; }
   
-  if (!amt) return alert("Please enter the dose.");
+  if (!amt) return alert("Please enter dosage.");
   
   const dateTimeStr = `${dDate}T${dTime}`;
   const timestamp = new Date(dateTimeStr).getTime();
@@ -687,7 +700,7 @@ function saveRecordEdit() {
   if(!dDate) dDate = getTodayString();
   if(!dTime) dTime = getNowTimeString();
   
-  if (isNaN(amt)) return alert("Please check the value.");
+  if (isNaN(amt)) return alert("Check values.");
   
   const timestamp = new Date(`${dDate}T${dTime}`).getTime();
   
@@ -834,25 +847,29 @@ function update() {
   renderDailyTable();
 }
 
-// [NEW] Checkbox toggle logic
 function toggleSelectAll() {
     const checkboxes = document.querySelectorAll('.history-chk');
     if (checkboxes.length === 0) return;
     
-    // Check if ALL are currently checked
     const allChecked = Array.from(checkboxes).every(cb => cb.checked);
     
-    // Toggle: if all checked -> uncheck all, else -> check all
     checkboxes.forEach(cb => {
         cb.checked = !allChecked;
     });
 }
 
+function changeHistoryFilter() {
+    currentHistoryPage = 1;
+    renderHistoryList();
+}
+
 function renderHistoryList() {
     const historyListEl = document.getElementById('historyList');
     historyListEl.innerHTML = '';
+    
+    const filterVal = document.getElementById('historyFilter').value;
 
-    const filteredDoses = doses.filter(d => viewMode === 'all' || d.type === viewMode);
+    const filteredDoses = doses.filter(d => filterVal === 'all' || d.type === filterVal);
     const reversedDoses = [...filteredDoses].reverse();
 
     const totalItems = reversedDoses.length;
@@ -865,9 +882,18 @@ function renderHistoryList() {
     const pageItems = reversedDoses.slice(startIdx, endIdx);
 
     pageItems.forEach((d) => {
-        const dateStr = new Date(d.time).toLocaleString('en-US', {
-            year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'
-        });
+        const dObj = new Date(d.time);
+        const year = dObj.getFullYear();
+        const month = dObj.getMonth() + 1;
+        const day = dObj.getDate();
+        const dayName = getDayName(dObj.getDay());
+        let hour = dObj.getHours();
+        const min = String(dObj.getMinutes()).padStart(2, '0');
+        const ampm = hour >= 12 ? 'PM' : 'AM';
+        hour = hour % 12;
+        hour = hour ? hour : 12; 
+        
+        const dateStr = `${year}. ${month}. ${day}. (${dayName}) <span style="white-space:nowrap">${ampm} ${hour}:${min}</span>`;
         
         let label = 'Tirz'; let tagClass = 'tirz';
         if(d.type === 'reta') { label = 'Reta'; tagClass = 'reta'; }
@@ -946,7 +972,7 @@ function askDel(id) {
 function askMultiDel() {
     const checkboxes = document.querySelectorAll('.history-chk:checked');
     if (checkboxes.length === 0) {
-        alert("Please select items to delete.");
+        alert("Please select records to delete.");
         return;
     }
     deleteTargetId = null;
@@ -1000,8 +1026,8 @@ function drawChart() {
 
   for (let t = startTime; t <= endTime; t += 86400000) {
     const d = new Date(t);
-    labels.push(`${d.getMonth()+1}/${d.getDate()}`); 
-    fullDates.push(`${d.getMonth()+1}/${d.getDate()}/${d.getFullYear()}`); // Full date MM/DD/YYYY
+    labels.push(`${d.getMonth()+1}.${d.getDate()}`); 
+    fullDates.push(`${d.getFullYear()}. ${d.getMonth()+1}. ${d.getDate()}.`);
 
     dataTirz.push(calculateTotalLevel(t, 'tirz'));
     dataReta.push(calculateTotalLevel(t, 'reta'));
@@ -1038,7 +1064,7 @@ function drawChart() {
       }
   };
 
-  const tooltipOpacity = appSettings.tooltipOpacity;
+  const tooltipOpacity = 0.8;
   const tooltipBgColor = `rgba(0,0,0,${tooltipOpacity})`;
 
   let datasets = [];
@@ -1099,7 +1125,7 @@ function drawChart() {
         datalabels: { display: true },
         tooltip: {
           enabled: false, 
-          callbacks: { // Add title callback to get full date
+          callbacks: { 
               title: function(context) {
                   return fullDates[context[0].dataIndex];
               }
@@ -1116,13 +1142,20 @@ function drawChart() {
                   const titleLines = tooltipModel.title || [];
                   const bodyLines = tooltipModel.body.map(b => b.lines);
 
-                  // [NEW LOGIC] Find doses on this date
-                  const dateStr = titleLines[0]; // e.g. "12/14/2024"
+                  const dateStr = titleLines[0]; 
+                  
+                  const nowObj = new Date();
+                  const todayFormatted = `${nowObj.getFullYear()}. ${nowObj.getMonth()+1}. ${nowObj.getDate()}.`;
+                  
+                  let dateDisplay = dateStr;
+                  if(dateStr === todayFormatted) {
+                      dateDisplay += ' (Today)';
+                  }
+
                   let doseInfoHtml = '';
                   doses.forEach(dose => {
                       const d = new Date(dose.time);
-                      // Format to match Full Date MM/DD/YYYY
-                      const dStr = `${d.getMonth()+1}/${d.getDate()}/${d.getFullYear()}`;
+                      const dStr = `${d.getFullYear()}. ${d.getMonth()+1}. ${d.getDate()}.`;
                       if (dStr === dateStr) {
                           let name = '';
                           if (dose.type === 'tirz') name = 'Tirz';
@@ -1133,8 +1166,7 @@ function drawChart() {
                       }
                   });
 
-                  let innerHtml = '<div class="tooltip-date">' + dateStr + '</div>';
-                  // [NEW] Doses container below date
+                  let innerHtml = '<div class="tooltip-date">' + dateDisplay + '</div>';
                   if(doseInfoHtml) {
                        innerHtml += '<div class="tooltip-doses">' + doseInfoHtml + '</div>';
                   }
@@ -1169,6 +1201,125 @@ function drawChart() {
   canvas.addEventListener('touchcancel', hideTooltip);
   canvas.addEventListener('mouseleave', hideTooltip);
   canvas.addEventListener('click', hideTooltip); 
+}
+
+function renderDailyTable() {
+    const tableHead = document.querySelector('#dailyTable thead tr');
+    const tbody = document.getElementById('dailyTableBody');
+    tbody.innerHTML = '';
+    
+    let thHtml = '<th style="width:25%">Date</th>';
+    if(viewMode === 'all' || viewMode === 'tirz') thHtml += '<th style="color:#36a2eb">Tirz</th>';
+    if(viewMode === 'all' || viewMode === 'reta') thHtml += '<th style="color:#ff6384">Reta</th>';
+    if(viewMode === 'all' || viewMode === 'sema') thHtml += '<th style="color:#28a745">Sema</th>';
+    tableHead.innerHTML = thHtml;
+
+    const sVal = document.getElementById('searchStart').value;
+    const eVal = document.getElementById('searchEnd').value;
+    const nowTs = new Date().getTime();
+
+    let startTime = sVal ? new Date(sVal).getTime() : nowTs - (5 * 86400000);
+    let endTime = eVal ? new Date(eVal).getTime() : nowTs + (45 * 86400000);
+
+    if(!sVal && doses.length > 0) startTime = doses[0].time;
+
+    let dateList = [];
+    for (let t = startTime; t <= endTime; t += 86400000) {
+        dateList.push(t);
+    }
+
+    const totalItems = dateList.length;
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    
+    if (currentPage > totalPages) currentPage = 1;
+    if (currentPage < 1) currentPage = 1;
+
+    const startIdx = (currentPage - 1) * itemsPerPage;
+    const endIdx = startIdx + itemsPerPage;
+    const pageItems = dateList.slice(startIdx, endIdx);
+
+    const todayStr = new Date().toDateString();
+
+    pageItems.forEach(t => {
+        const d = new Date(t);
+        const dateStr = `${d.getMonth() + 1}.${d.getDate()} (${getDayName(d.getDay())})`;
+        const isToday = d.toDateString() === todayStr;
+        const rowClass = isToday ? 'today-row' : '';
+
+        const valTirz = calculateTotalLevel(t, 'tirz').toFixed(2);
+        const valReta = calculateTotalLevel(t, 'reta').toFixed(2);
+        const valSema = calculateTotalLevel(t, 'sema').toFixed(2);
+
+        const dayDoses = doses.filter(dose => new Date(dose.time).toDateString() === d.toDateString());
+        
+        let tirzBadge = '', retaBadge = '', semaBadge = '';
+        
+        dayDoses.forEach(dose => {
+            if(dose.type === 'tirz') tirzBadge += `<span class="dose-badge">💉 ${dose.amt}mg</span>`;
+            if(dose.type === 'reta') retaBadge += `<span class="dose-badge">💉 ${dose.amt}mg</span>`;
+            if(dose.type === 'sema') semaBadge += `<span class="dose-badge">💉 ${dose.amt}mg</span>`;
+        });
+
+        const tr = document.createElement('tr');
+        tr.className = rowClass;
+
+        let rowHtml = `<td class="date-col">${dateStr}</td>`;
+        if(viewMode === 'all' || viewMode === 'tirz') rowHtml += `<td class="val-col" style="color:#36a2eb">${valTirz}${tirzBadge}</td>`;
+        if(viewMode === 'all' || viewMode === 'reta') rowHtml += `<td class="val-col" style="color:#ff6384">${valReta}${retaBadge}</td>`;
+        if(viewMode === 'all' || viewMode === 'sema') rowHtml += `<td class="val-col" style="color:#28a745">${valSema}${semaBadge}</td>`;
+        
+        tr.innerHTML = rowHtml;
+        tbody.appendChild(tr);
+    });
+
+    renderPagination(totalPages);
+}
+
+function getDayName(dayIdx) {
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    return days[dayIdx];
+}
+
+function renderPagination(totalPages) {
+    const container = document.getElementById('paginationControls');
+    container.innerHTML = '';
+
+    if (totalPages <= 1) return;
+
+    const prevBtn = document.createElement('button');
+    prevBtn.className = 'page-btn';
+    prevBtn.innerHTML = '‹';
+    prevBtn.disabled = currentPage === 1;
+    prevBtn.onclick = () => changePage(currentPage - 1);
+    container.appendChild(prevBtn);
+
+    let startPage = Math.max(1, currentPage - 2);
+    let endPage = Math.min(totalPages, currentPage + 2);
+
+    if (endPage - startPage < 4) {
+        if (startPage === 1) endPage = Math.min(totalPages, startPage + 4);
+        else if (endPage === totalPages) startPage = Math.max(1, endPage - 4);
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+        const btn = document.createElement('button');
+        btn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
+        btn.innerText = i;
+        btn.onclick = () => changePage(i);
+        container.appendChild(btn);
+    }
+
+    const nextBtn = document.createElement('button');
+    nextBtn.className = 'page-btn';
+    nextBtn.innerHTML = '›';
+    nextBtn.disabled = currentPage === totalPages;
+    nextBtn.onclick = () => changePage(currentPage + 1);
+    container.appendChild(nextBtn);
+}
+
+function changePage(page) {
+    currentPage = page;
+    renderDailyTable();
 }
 </script>
 </body>
